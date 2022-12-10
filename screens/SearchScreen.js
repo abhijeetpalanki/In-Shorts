@@ -1,25 +1,21 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  FlatList,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import Article from "../components/Article";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import React, { useState } from "react";
 import axios from "axios";
+import SearchBar from "../components/SearchBar";
+import Article from "../components/Article";
 
-const HomeScreen = () => {
+const SearchScreen = () => {
+  const [searchText, setSearchText] = useState("");
   const [articles, setArticles] = useState([]);
 
-  const getNews = () => {
+  const searchArticles = () => {
     axios
       .get(
         "https://newsapi.org/v2/top-headlines?country=us&apiKey=c710b32a3ba24ef8800f06e0fb90158a",
         {
           params: {
             category: "technology",
+            q: searchText,
           },
         }
       )
@@ -31,12 +27,14 @@ const HomeScreen = () => {
       });
   };
 
-  useEffect(() => {
-    getNews();
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SearchBar
+        searchText={searchText}
+        setSearchText={setSearchText}
+        onSubmit={searchArticles}
+      />
+
       <FlatList
         data={articles}
         renderItem={({ item }) => (
@@ -51,16 +49,15 @@ const HomeScreen = () => {
         )}
         keyExtractor={(item) => item.title}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    paddingTop: StatusBar.currentHeight,
+    backgroundColor: "#fff",
   },
 });
 
-export default HomeScreen;
+export default SearchScreen;
