@@ -3,16 +3,20 @@ import {
   Text,
   StyleSheet,
   Image,
-  StatusBar,
-  SafeAreaView,
   Platform,
+  Pressable,
 } from "react-native";
 import React from "react";
 import moment from "moment/moment";
+import * as WebBrowser from "expo-web-browser";
 
 const Article = (props) => {
+  const goToSource = () => {
+    WebBrowser.openBrowserAsync(props.url);
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <Pressable style={styles.container} onPress={goToSource}>
       <Image
         style={styles.image}
         source={{
@@ -42,7 +46,7 @@ const Article = (props) => {
           </Text>
         </View>
       </View>
-    </SafeAreaView>
+    </Pressable>
   );
 };
 
