@@ -8,37 +8,37 @@ import {
   Platform,
 } from "react-native";
 import React from "react";
+import moment from "moment/moment";
 
-const Article = () => {
+const Article = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
         style={styles.image}
         source={{
-          uri: "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
+          uri: props.urlToImage,
         }}
       />
 
       <View style={{ padding: 20 }}>
-        <Text style={styles.title}>
-          Tech News Application using React Native
-        </Text>
+        <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.description} numberOfLines={3}>
-          You're watching this tutorial on Abhi Your Pal Youtube Channel. You're
-          watching this tutorial on Abhi Your Pal Youtube Channel.
+          {props.description}
         </Text>
 
         <View style={styles.data}>
           <Text style={styles.heading}>
             by:
-            <Text style={styles.author}>Abhijeet Palanki</Text>
+            <Text style={styles.author}>{props.author}</Text>
           </Text>
-          <Text style={styles.date}>Dec 12th 22</Text>
+          <Text style={styles.date}>
+            {moment(props.publishedAt).format("MMM Do YY")}
+          </Text>
         </View>
 
         <View style={{ marginTop: 10 }}>
           <Text>
-            source: <Text style={styles.source}>Abhi Your Pal</Text>
+            source: <Text style={styles.source}>{props.sourceName}</Text>
           </Text>
         </View>
       </View>
